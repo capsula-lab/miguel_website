@@ -4,7 +4,7 @@ import ProfileStyle from "./Profile.css";
 
 class Profile extends React.Component  {
     render() {
-      let imgSrc = "http://localhost:3001/" + this.props.picture;
+      let imgSrc = "https://storage.googleapis.com/website_media/MEDIA/other/" + this.props.picture;
       let id = this.props.name.replace(" ", "_");
       return(
         <div id= {id} class="Project" style={{'margin-top':'30px'}}>
