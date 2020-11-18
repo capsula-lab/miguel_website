@@ -1,0 +1,45 @@
+p{
+ text-justify: auto;
+}
+
+
+#menu {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 4rem;
+  z-index: 10;
+
+}
+
+#smoothLink {
+  -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+#smoothLink:hover {
+  text-decoration: none;
+}
+
+#personas_projects {
+  border-left: 1px solid white;
+}
+
+#personas_projects::after {
+  padding-left: 10px;
+}
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+AnchorLink {
+  color: white;
+}
+span {
+  display: block;
+  color: white;
+}

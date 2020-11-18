@@ -1,0 +1,17 @@
+#image_gallery img {
+  max-width:550px;
+  widtH: auto;
+  height: auto;
+  max-height: 400px;
+}
+
+.centered {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+Button {
+  background-color: black;
+}
