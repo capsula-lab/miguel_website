@@ -1,3 +1,8 @@
+#page {
+  background-image: url('https://storage.googleapis.com/website_media/MEDIA/other/backgroundtexturagrande.png');
+}
+
+
 p{
  text-justify: auto;
 }
