@@ -1,0 +1,8 @@
+#projectTitle, #projectDate {
+text-align: right;
+margin-right: 20px;
+}
+
+#projectBio {
+  color: white
+}

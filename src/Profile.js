@@ -10,7 +10,7 @@ class Profile extends React.Component  {
         <div id= {id} class="Project" style={{'margin-top':'30px'}}>
           <img src= {imgSrc} />
           <h1>{this.props.name}</h1>
-          {this.props.bio}
+          <span id="bio">{this.props.bio}</span>
         </div>
       )
     }

@@ -10,7 +10,7 @@ class Projects extends React.Component {
     };
     this.splitter = this.splitter.bind(this);
 
-      readRemoteFile("http://localhost:3001/projectos.csv", {
+      readRemoteFile("http://localhost:5000/projectos.csv", {
             complete: (results) => {
               this.splitter(results['data']);
             },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactDOM, Component, PropTypes } from "react";
 import logo from './logo.svg';
 import './Main.css';
 import {Container, Grid} from '@material-ui/core';
@@ -23,9 +23,10 @@ class Main extends React.Component {
     }
     this.splitter = this.splitter.bind(this);
     this.menuOnClick = this.menuOnClick.bind(this);
-
-      readRemoteFile("http://localhost:3001/projectos.csv", {
+    this.refs = React.createRef();
+      readRemoteFile("http://localhost:5000/projectos.csv", {
             complete: (results) => {
+              let projectData = results['data']
               let projectsSelvIkei = this.splitter(results['data'], 'selv ikei');
               let projectsSelvIkeiMenu = {}
               for (let i in projectsSelvIkei) {
@@ -37,6 +38,7 @@ class Main extends React.Component {
               let projectsCasulo = this.splitter(results['data'], 'casulo');
               this.setState(
                 {
+                  projectData:projectData,
                   projectsSelvIkei:projectsSelvIkei,
                   projectsOpaaco:projectsOpaaco,
                   projectsCasulo:projectsCasulo,
@@ -49,6 +51,25 @@ class Main extends React.Component {
 
             },
           });
+
+  }
+
+  componentDidMount() {
+          const list = ReactDOM.findDOMNode(this)
+          list.addEventListener('scroll', this._handleScroll);
+      }
+      componentWillUnmount() {
+          const list = ReactDOM.findDOMNode(this)
+          list.removeEventListener('scroll', this._handleScroll);
+      }
+
+
+  handleScroll = (e) => {
+    console.log("olha o scroll");
+    const top = e.target.scrollTop === e.target.clientHeight;
+    if(top) {
+      console.log("olha o top");
+    }
   }
 
   splitter = (results, artist) => {
@@ -61,7 +82,6 @@ class Main extends React.Component {
         filteredCount++;
       }
     }
-    console.log(projects);
     return projects;
   };
 
@@ -95,6 +115,7 @@ class Main extends React.Component {
     const bioOpaaco= <p><b>opaaco</b> es un artista visual multimedia autodidacta que a través de sus experimentos erráticos crea entornos visuales orgánicos. Es frecuente encontrarlo moldeando ideas rodeado por objetos que poco tienen que ver entre si. Teles destripadas, desechos de laboratorios obsoletos, quimicos para revelación caducados, lupas, imanes, microscópicos amontonados con las máquinas hechas a medida por casulo. Es el personaje menos técnico de los 3, vivido adepto de la prueba/error y poco apologista de la teoría antes de la práctica. Experimentador nato con una necesidad incontrolable por no hacer las cosas bién. Su naturaleza caótica pero maleable se dá bien en entornos ruidosos con luces poco estáticas.</p>;
     const bioCasulo= <p><b>casulo</b> es el personaje que se encarga de la idealización, construcción y reparación del hardware de los demás proyectos. Es el personaje más técnico, formal y tradicional de los 3. Es un científico que poco uso recreativo dá a las máquinas que construye, enfocando más su dedicación en la investigación y desarrollo de nuevas formas de interacción hombre-máquina con el objetivo de permitir o simplemente facilitar el proceso creativo de otros artistas/creadorxs, explorando nuevas formas de expresión. Suele darse bien en ambientes silenciosos y bien iluminados.</p>;
     return (
+      <div onScroll={this.handleScroll}>
       <Container id="page">
       <Grid item xs={12}>
         <Grid container>
@@ -115,19 +136,20 @@ class Main extends React.Component {
                 </div>
               </StickyBox>
             </Grid>
-            <Grid xs={7} item>
+            <Grid xs={8} item>
               <Profile
               name="miguel zurk cruz"
               picture="picMiguel.jpg"
               bio={bioMiguel}
               />
-              <Profile
+              <Profile onScroll={this.handleScroll}
               name="casulo"
               picture="picCasulo.jpg"
               bio={bioCasulo}
               />
               <Projects
-              projectNames={'casulo'} />
+              projectNames={'casulo'}
+              projectData={this.state.projectData} />
               <Projects />
               <Profile
               name="opaaco"
@@ -135,18 +157,21 @@ class Main extends React.Component {
               bio={bioOpaaco}
               />
               <Projects
-              projectNames={'opaaco'} />
+              projectNames={'opaaco'}
+              projectData={this.state.projectData} />
               <Profile
               name="selv ikei"
               picture="picSelvinho.jpeg"
               bio={bioSelvIkei}
               />
               <Projects
-              projectNames={'selv ikei'} />
+              projectNames={'selv ikei'}
+              projectData={this.state.projectData} />
             </Grid>
         </Grid>
       </Grid>
       </Container>
+      </div>
     );
   }
 }

@@ -8,7 +8,7 @@ class Gallery extends React.Component {
       imageNames: this.props.imageNames.split(';'),
       captions: this.props.captions.split(';'),
       galleryIndex: 0,
-      imgUrl: "http://localhost:3001/" + this.props.ImageNames
+      imgUrl: this.props.ImageNames
     }
     this.galleryArrow = this.galleryArrow.bind(this);
   }
@@ -24,7 +24,7 @@ class Gallery extends React.Component {
       let newIndex = this.state.galleryIndex + increment;
       this.setState({galleryIndex: newIndex });
     }
-    let url = "http://localhost:3001/" + this.state.imageNames[this.state.GalleryIndex];
+    let url = "https://storage.googleapis.com/website_media/" + this.state.imageNames[this.state.GalleryIndex];
     this.setState({imgUrl: url});
   }
 
@@ -51,17 +51,23 @@ class Gallery extends React.Component {
    path.map((value, index) => {
      let value2 = value.split(';');
      return value2.map((value,index) => {
-       let href = "http://localhost:3001/" + value;
-        images.push(<img id="galleryImage" src={href} />);
+       if((value.substring(value.length - 4,value.length) == '.mp4') || (value.substring(value.length - 4,value.length) == '.mov')){
+         let href = "https://storage.googleapis.com/website_media/" + value;
+         images.push(<video  id="galleryImage" src={href}/>);
+       }
+        else {
+          let href = "https://storage.googleapis.com/website_media/" + value;
+          images.push(<img id="galleryImage" src={href} />);
+        }
      })
     })
     let isMoreThanOne = (images.length == 1);
 
     return(
       <div id="image_gallery">
-        <div style={{'height': '400px','width':'550px','display': 'flex'}}>
+        <div style={{'height': '600px','width':'550px','display': 'flex'}}>
           {isMoreThanOne
-            ? <div></div>:<button onClick={(event) => this.galleryArrow(event,-1)} >Left</button>
+            ? <div style={{"margin":'10px'}}></div>:<button onClick={(event) => this.galleryArrow(event,-1)} >Left</button>
           }
 
         <div>
@@ -71,7 +77,7 @@ class Gallery extends React.Component {
         </div>
         </div>
         {isMoreThanOne
-          ? <div></div>:<button onClick={(event) => this.galleryArrow(event,1)} >Right</button>
+          ? <div></div>:<button id="buttonRight" onClick={(event) => this.galleryArrow(event,1)} >Right</button>
         }
         </div>
       </div>
