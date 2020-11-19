@@ -24,7 +24,7 @@ class Main extends React.Component {
     this.splitter = this.splitter.bind(this);
     this.menuOnClick = this.menuOnClick.bind(this);
     this.refs = React.createRef();
-      readRemoteFile("http://localhost:5000/projectos.csv", {
+      readRemoteFile("https://miguelzurkcruz.com/projectos.csv", {
             complete: (results) => {
               let projectData = results['data']
               let projectsSelvIkei = this.splitter(results['data'], 'selv ikei');
