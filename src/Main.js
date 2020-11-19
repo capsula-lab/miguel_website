@@ -54,24 +54,6 @@ class Main extends React.Component {
 
   }
 
-  componentDidMount() {
-          const list = ReactDOM.findDOMNode(this)
-          list.addEventListener('scroll', this._handleScroll);
-      }
-      componentWillUnmount() {
-          const list = ReactDOM.findDOMNode(this)
-          list.removeEventListener('scroll', this._handleScroll);
-      }
-
-
-  handleScroll = (e) => {
-    console.log("olha o scroll");
-    const top = e.target.scrollTop === e.target.clientHeight;
-    if(top) {
-      console.log("olha o top");
-    }
-  }
-
   splitter = (results, artist) => {
     let projects = [];
     let dadosLength = results.length;
@@ -115,7 +97,7 @@ class Main extends React.Component {
     const bioOpaaco= <p><b>opaaco</b> es un artista visual multimedia autodidacta que a través de sus experimentos erráticos crea entornos visuales orgánicos. Es frecuente encontrarlo moldeando ideas rodeado por objetos que poco tienen que ver entre si. Teles destripadas, desechos de laboratorios obsoletos, quimicos para revelación caducados, lupas, imanes, microscópicos amontonados con las máquinas hechas a medida por casulo. Es el personaje menos técnico de los 3, vivido adepto de la prueba/error y poco apologista de la teoría antes de la práctica. Experimentador nato con una necesidad incontrolable por no hacer las cosas bién. Su naturaleza caótica pero maleable se dá bien en entornos ruidosos con luces poco estáticas.</p>;
     const bioCasulo= <p><b>casulo</b> es el personaje que se encarga de la idealización, construcción y reparación del hardware de los demás proyectos. Es el personaje más técnico, formal y tradicional de los 3. Es un científico que poco uso recreativo dá a las máquinas que construye, enfocando más su dedicación en la investigación y desarrollo de nuevas formas de interacción hombre-máquina con el objetivo de permitir o simplemente facilitar el proceso creativo de otros artistas/creadorxs, explorando nuevas formas de expresión. Suele darse bien en ambientes silenciosos y bien iluminados.</p>;
     return (
-      <div onScroll={this.handleScroll}>
+      <div>
       <Container id="page">
       <Grid item xs={12}>
         <Grid container>
@@ -142,7 +124,7 @@ class Main extends React.Component {
               picture="picMiguel.jpg"
               bio={bioMiguel}
               />
-              <Profile onScroll={this.handleScroll}
+              <Profile
               name="casulo"
               picture="picCasulo.jpg"
               bio={bioCasulo}
