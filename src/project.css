@@ -1,8 +1,21 @@
 #projectTitle, #projectDate {
-text-align: right;
-margin-right: 20px;
+margin-right: 10px;
+}
+
+#projectTitle {
+  display: inline;
+}
+
+#dateAndTitle {
+  margin-left: 10px;
 }
 
 #projectBio {
-  color: white
+  color: white;
+  margin-right: 10px;
+  margin-top: 30px;
+}
+
+#projecto {
+  margin-top: 30px;
 }

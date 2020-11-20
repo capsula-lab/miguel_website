@@ -1,5 +1,6 @@
 import React from "react";
 import GalleryStyle from "./Gallery.css"
+import {Container, Grid} from '@material-ui/core';
 
 class Gallery extends React.Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class Gallery extends React.Component {
     caption.map((value, index) => {
       let value2 = value.split(';');
       return value2.map((value,index) => {
-         captions.push(<span>{value}</span>);
+         captions.push(<span id="caption">{value}</span>);
       })
      })
 
@@ -53,34 +54,44 @@ class Gallery extends React.Component {
      return value2.map((value,index) => {
        if((value.substring(value.length - 4,value.length) == '.mp4') || (value.substring(value.length - 4,value.length) == '.mov')){
          let href = "https://storage.googleapis.com/website_media/" + value;
-         images.push(<video  id="galleryImage" src={href}/>);
+         images.push(<video  controls id="galleryImageVideo" src={href}/>);
        }
         else {
           let href = "https://storage.googleapis.com/website_media/" + value;
-          images.push(<img id="galleryImage" src={href} />);
+          images.push(<div style={{'height': '470px'}}><span class="helper"></span><img id="galleryImage" src={href} /></div>);
         }
      })
     })
     let isMoreThanOne = (images.length == 1);
 
-    return(
-      <div id="image_gallery">
-        <div style={{'height': '600px','width':'550px','display': 'flex'}}>
-          {isMoreThanOne
-            ? <div style={{"margin":'10px'}}></div>:<button onClick={(event) => this.galleryArrow(event,-1)} >Left</button>
-          }
+    let bttnLeftText = "<";
+    let bttnRightText = ">";
 
-        <div>
-        <div style={{'width':'500px'}}>
-        {images[this.state.galleryIndex]}
-        {captions[this.state.galleryIndex]}
-        </div>
-        </div>
-        {isMoreThanOne
-          ? <div></div>:<button id="buttonRight" onClick={(event) => this.galleryArrow(event,1)} >Right</button>
-        }
-        </div>
-      </div>
+
+
+    return(
+      <Grid item xs={12}>
+        <Grid id="image_gallery" container>
+          <div style={{'height': '510px','width':'800px','display': 'flex'}} >
+              <Grid xs={1} id="menu" item>
+              {isMoreThanOne
+                ? <div style={{'width':'30px','height': '300px','margin-top':'105px'}}></div>:<button id="arrows" onClick={(event) => this.galleryArrow(event,-1)} >{bttnLeftText}</button>
+              }
+              </Grid>
+              <Grid xs={9} id="menu" item>
+              <div>
+                {images[this.state.galleryIndex]}
+                {captions[this.state.galleryIndex]}
+              </div>
+              </Grid>
+              <Grid xs={1} id="menu" item>
+              {isMoreThanOne
+                ? <div style={{'width':'30px','height': '300px','margin-top':'105px'}}></div>:<button id="arrows" onClick={(event) => this.galleryArrow(event,1)} >{bttnRightText}</button>
+              }
+              </Grid>
+            </div>
+        </Grid>
+      </Grid>
     )
   }
 }

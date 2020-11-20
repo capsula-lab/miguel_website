@@ -11,6 +11,8 @@ import "intersection-observer";
 import ProfileStyle from "./Profile.css";
 import { useIsVisible } from "react-is-visible";
 import Profile from './Profile.js'
+import Footer from './Footer.js'
+import SubMenu from './SubMenu.js'
 
 class Main extends React.Component {
   constructor() {
@@ -19,12 +21,16 @@ class Main extends React.Component {
         projectsSelvIkei: [],
         projectsOpaaco: [],
         projectsCasulo: [],
-        projectsToRender: []
+        projectsToRender: [],
+        inMenu:[true,false,false],
+        casulo: 'bold',
+        opaaco: 'normal',
+        selvIkei: 'normal'
     }
     this.splitter = this.splitter.bind(this);
     this.menuOnClick = this.menuOnClick.bind(this);
-    this.refs = React.createRef();
-      readRemoteFile("https://storage.googleapis.com/website_media/MEDIA/other/projectos.csv", {
+
+      readRemoteFile("https://www.miguelzurkcruz.com/projectos.csv", {
             complete: (results) => {
               let projectData = results['data']
               let projectsSelvIkei = this.splitter(results['data'], 'selv ikei');
@@ -42,10 +48,6 @@ class Main extends React.Component {
                   projectsSelvIkei:projectsSelvIkei,
                   projectsOpaaco:projectsOpaaco,
                   projectsCasulo:projectsCasulo,
-                  projectsToRender:projectsCasulo,
-                  casulo: 'bold',
-                  opaaco: 'normal',
-                  selvIkei: 'normal'
                 }
               );
 
@@ -74,21 +76,22 @@ class Main extends React.Component {
   };
 
   menuOnClick = (event, artist) => {
-    let projectsToRender
+    let newInMenu = this.state.inMenu;
+    newInMenu[0] = false;
+    newInMenu[1] = false;
+    newInMenu[2] = false;
     if(artist == 'casulo'){
-      projectsToRender = this.state.projectsCasulo
+      newInMenu[0] = true;
+      this.setState({inMenu: newInMenu});
     } else if(artist == 'opaaco') {
-      projectsToRender = this.state.projectsOpaaco;
+      newInMenu[1] = true;
+      this.setState({inMenu: newInMenu});
     } else if(artist== 'selvIkei') {
-      projectsToRender = this.state.projectsSelvIkei;
+      newInMenu[2] = true;
+      this.setState({inMenu: newInMenu});
     }
     this.setState({casulo:'normal',opaaco:'normal','selvIkei':'normal'})
     this.setState({[artist]:'bold'});
-    this.setState({projectsToRender:projectsToRender});
-  };
-
-  submenuOnClick = (event, project) => {
-
   };
 
   render() {
@@ -101,22 +104,36 @@ class Main extends React.Component {
       <Container id="page">
       <Grid item xs={12}>
         <Grid container>
-            <Grid xs={1} id="menu" item>
-              <StickyBox offsetTop={20} offsetBottom={20}>
-                <AnchorLink href="#casulo" style={ {'font-weight': this.state.casulo} }><span id="smoothLink" style={{'margin-top':'60px'}} onClick={(event) => this.menuOnClick(event,'casulo')}>casulo</span></AnchorLink>
-                <AnchorLink href="#opaaco" style={ {'font-weight': this.state.opaaco} }><span id="smoothLink" style={{'margin-top':'110px'}} onClick={(event) => this.menuOnClick(event,'opaaco')}>opaaco</span></AnchorLink>
-                <AnchorLink href="#selv_ikei" style={ {'font-weight': this.state.selvIkei} }><span id="smoothLink" style={{'margin-top':'130px'}} onClick={(event) => this.menuOnClick(event,'selvIkei')}>selvIkei</span></AnchorLink>
-              </StickyBox>
-            </Grid>
-            <Grid xs={3} item>
-              <StickyBox offsetTop={20} offsetBottom={20}>
-                <div id="personas_projects">
-                   {this.state.projectsToRender.map((value, index) => {
-                     let href = "#" + value;
-                      return <AnchorLink style={{'text-decoration': 'none'}} href={href}><span style={{'margin-left':'10px'}}>{value}</span></AnchorLink>
-                    })}
-                </div>
-              </StickyBox>
+            <Grid xs={4} item>
+              <Grid id="menuBox" container>
+                <Grid xs={1} id="menu" item>
+                  <StickyBox offsetTop={20} offsetBottom={20}>
+                    <AnchorLink href="#casulo" style={ {'font-weight': this.state.casulo} }><span id="smoothLink" style={{'margin-top':'110px'}} onClick={(event) => this.menuOnClick(event,'casulo')}>casulo</span></AnchorLink>
+                    <AnchorLink href="#opaaco" style={ {'font-weight': this.state.opaaco} }><span id="smoothLink" style={{'margin-top':'130px'}} onClick={(event) => this.menuOnClick(event,'opaaco')}>opaaco</span></AnchorLink>
+                    <AnchorLink href="#selv_ikei" style={ {'font-weight': this.state.selvIkei} }><span id="smoothLink" style={{'margin-top':'130px'}} onClick={(event) => this.menuOnClick(event,'selvIkei')}>selv_Ikei</span></AnchorLink>
+                  </StickyBox>
+                </Grid>
+                <Grid xs={10} item>
+                  <StickyBox offsetBottom={20}>
+                  {this.state.inMenu[0]
+                    ? <div style={{'margin-top':'80px'}} id="subMenuCasulo">
+                     <SubMenu list={this.state.projectsCasulo} />
+                      </div>
+                    :<div style={{'margin-top':'90px'}} id="subMenuCasulo"><p> </p></div>
+                  }
+                  {this.state.inMenu[1]
+                    ? <div style={{'margin-top':'230px'}} id="subMenuCasulo">
+                    <SubMenu list={this.state.projectsOpaaco} />
+                    </div>:<div style={{'margin-top':'110px'}} id="subMenuCasulo"><p> </p></div>
+                  }
+                  {this.state.inMenu[2]
+                    ? <div style={{'margin-top':'360px'}} id="subMenuCasulo">
+                    <SubMenu list={this.state.projectsSelvIkei} />
+                    </div>:<div style={{'margin-top':'110px'}} id="subMenuCasulo"><p> </p></div>
+                  }
+                  </StickyBox>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid xs={8} item>
               <Profile
@@ -150,6 +167,7 @@ class Main extends React.Component {
               projectNames={'selv ikei'}
               projectData={this.state.projectData} />
             </Grid>
+            <Footer />
         </Grid>
       </Grid>
       </Container>

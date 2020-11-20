@@ -3,7 +3,10 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-
+#footer a {
+  color:white;
+  text-decoration: none;
+}
 p{
  text-justify: auto;
 }
@@ -12,8 +15,16 @@ p{
 #menu {
   position: -webkit-sticky;
   position: sticky;
-  top: 4rem;
-  z-index: 10;
+  top: 3rem;
+  z-index: 9;
+
+}
+
+#menuBox {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 1rem;
+  z-index: 1;
 
 }
 
@@ -29,7 +40,7 @@ p{
   text-decoration: none;
 }
 
-#personas_projects {
+#subMenuCasulo, #subMenuOpaaco, #subMenuSelvIkei {
   border-left: 1px solid white;
 }
 

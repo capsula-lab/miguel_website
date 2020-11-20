@@ -10,8 +10,9 @@ class Projects extends React.Component {
     };
     this.splitter = this.splitter.bind(this);
 
-      readRemoteFile("https://storage.googleapis.com/website_media/MEDIA/other/projectos.csv", {
+      readRemoteFile("https://www.miguelzurkcruz.com/projectos.csv", {
             complete: (results) => {
+              console.log("completed results");
               this.splitter(results['data']);
             },
           });

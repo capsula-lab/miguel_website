@@ -3,10 +3,17 @@
 
 }
 
+#bio {
+  margin-right: 40px;
+}
 
 .Project img {
 height:300px;
 border-radius:50%;
+}
+
+.project {
+  margin-bottom: 10px;
 }
 
 #menu a:hover {

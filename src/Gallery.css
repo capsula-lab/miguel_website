@@ -1,8 +1,28 @@
 #image_gallery img {
+  max-width:700px;
+  widtH: auto;
+  height: auto;
+  max-height: 470px;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: middle;
+  width: 90%;
+  margin: 10px;
+  margin-bottom: 5px;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#galleryImageVideo {
+  margin: 10px;
   max-width:550px;
   widtH: auto;
   height: auto;
-  max-height: 400px;
+  max-height: 450px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -10,10 +30,16 @@
   width: 90%;
 }
 
-#galleryImage {
-  margin: 10px;
+#caption {
+  margin-top:10px
 }
-
+#arrows {
+  width:30px;
+  height: 300px;
+  margin-top:105px;
+  color:white;
+  border-width: 1px;
+}
 .centered {
   height: 100vh;
   display: flex;
