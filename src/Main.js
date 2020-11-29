@@ -22,13 +22,14 @@ class Main extends React.Component {
         projectsOpaaco: [],
         projectsCasulo: [],
         projectsToRender: [],
-        inMenu:[true,false,false],
-        casulo: 'bold',
+        inMenu:[false,false,false],
+        casulo: 'normal',
         opaaco: 'normal',
-        selvIkei: 'normal'
+        selv_ikei: 'normal'
     }
     this.splitter = this.splitter.bind(this);
     this.menuOnClick = this.menuOnClick.bind(this);
+    this.boldChanger = this.boldChanger.bind(this);
 
       readRemoteFile("https://www.miguelzurkcruz.com/projectos.csv", {
             complete: (results) => {
@@ -53,8 +54,8 @@ class Main extends React.Component {
 
             },
           });
-
   }
+
 
   splitter = (results, artist) => {
     let projects = [];
@@ -69,9 +70,25 @@ class Main extends React.Component {
     return projects;
   };
 
-  boldChanger = (isVisible, name) => {
-    if (isVisible == true) {
-        this.setState({[name]:'bold'})
+  boldChanger = (name,booliana) => {
+    if(booliana){
+      let newInMenu = this.state.inMenu;
+      newInMenu[0] = false;
+      newInMenu[1] = false;
+      newInMenu[2] = false;
+      if(name == 'casulo'){
+        newInMenu[0] = true;
+        this.setState({inMenu: newInMenu});
+      } else if(name == 'opaaco') {
+        newInMenu[1] = true;
+        this.setState({inMenu: newInMenu});
+      } else if(name== 'selv_ikei') {
+        newInMenu[2] = true;
+        this.setState({inMenu: newInMenu});
+      }
+      console.log('doing bold changes to: ' + name);
+      this.setState({casulo:'normal',opaaco:'normal','selv_ikei':'normal'})
+      this.setState({[name]:'bold'});
     }
   };
 
@@ -90,9 +107,23 @@ class Main extends React.Component {
       newInMenu[2] = true;
       this.setState({inMenu: newInMenu});
     }
-    this.setState({casulo:'normal',opaaco:'normal','selvIkei':'normal'})
+    this.setState({casulo:'normal',opaaco:'normal','selv_ikei':'normal'})
     this.setState({[artist]:'bold'});
   };
+
+  componentDidMount() {
+    const options = {
+      threshold: 0.7
+    };
+    const listOfProjects = [document.querySelector('#opaaco'),document.querySelector('#casulo'),document.querySelector('#selv_ikei')];
+    const observer = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        this.boldChanger(entry.target.id, entry.isIntersecting);
+      })
+    }.bind(this),options);
+    listOfProjects.forEach(project => {observer.observe(project);});
+  }
+
 
   render() {
     const bioMiguel = <p>maker autodidacta e investigador del error. <br />  mi trabajo se centra principalmente en el ámbito del arte tecnológico donde intento encontrar un balance entre la investigación y la creación de objetos y/o contenidos no palpables. Mis piezas son fruto de una dualidad en que se equilibra una voluntad por solucionar necesidades objetivas y técnicas, poniéndolas en contraste con visiones e interpretaciones desde una perspectiva subjetiva así como de perspectivas de creadores/as a mi alrededor."</p>;
@@ -110,7 +141,7 @@ class Main extends React.Component {
                   <StickyBox offsetTop={20} offsetBottom={20}>
                     <AnchorLink href="#casulo" style={ {'font-weight': this.state.casulo} }><span id="smoothLink" style={{'margin-top':'110px'}} onClick={(event) => this.menuOnClick(event,'casulo')}>casulo</span></AnchorLink>
                     <AnchorLink href="#opaaco" style={ {'font-weight': this.state.opaaco} }><span id="smoothLink" style={{'margin-top':'130px'}} onClick={(event) => this.menuOnClick(event,'opaaco')}>opaaco</span></AnchorLink>
-                    <AnchorLink href="#selv_ikei" style={ {'font-weight': this.state.selvIkei} }><span id="smoothLink" style={{'margin-top':'130px'}} onClick={(event) => this.menuOnClick(event,'selvIkei')}>selv_Ikei</span></AnchorLink>
+                    <AnchorLink href="#selv_ikei" style={ {'font-weight': this.state.selv_ikei} }><span id="smoothLink" style={{'margin-top':'130px','white-space': 'nowrap'}} onClick={(event) => this.menuOnClick(event,'selvIkei')}>selv ikei</span></AnchorLink>
                   </StickyBox>
                 </Grid>
                 <Grid xs={10} item>
