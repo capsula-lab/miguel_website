@@ -16,7 +16,6 @@ class SubMenu extends React.Component  {
     this.setState({inMenu:newInMenu})
   };
 
-
     render() {
       return(
         <div>
